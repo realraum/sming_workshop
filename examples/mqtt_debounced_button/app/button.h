@@ -8,6 +8,8 @@ class DebouncedButton
 public:
 	DebouncedButton(int8_t button_pin, uint32_t debounce_duration_ms=300, bool pulls_to_ground=true);
 	~DebouncedButton();
+	DebouncedButton(DebouncedButton&) = delete;
+	DebouncedButton &operator= ( const DebouncedButton & ) = delete;
 	bool isPressed();
 	bool wasPressed();
 

@@ -6,7 +6,7 @@ DebouncedButton::DebouncedButton(int8_t button_pin, uint32_t debounce_duration_m
 {
 	button_debounce_duration_ = debounce_duration_ms;
 	button_pin_ = button_pin;
-	button_pulls_to_ground_ = pulls_to_ground;	
+	button_pulls_to_ground_ = pulls_to_ground;
 	if (pulls_to_ground) {
 		pinMode(button_pin, INPUT_PULLUP);
 	} else {
@@ -19,7 +19,6 @@ DebouncedButton::~DebouncedButton()
 {
 	detachInterrupt(button_pin_);
 }
-
 
 bool DebouncedButton::isPressed()
 {

@@ -116,7 +116,7 @@ void init()
 	commandHandler.registerSystemCommands();
 	mybutton_ = new DebouncedButton(BUTTON_PIN, 30, true);
 	//this
-	
+
 	configureWifi();
 	WifiEvents.onStationGotIP(wifiConnectOk);
 	WifiEvents.onStationDisconnect(wifiConnectFail);

@@ -79,7 +79,7 @@ void startMqttClient()
 void stopMqttClient()
 {
 	if (0 == mqtt)
-		return;	
+		return;
 	// mqtt->unsubscribe(SpiffsConfig.getMQTTTopic(JSON_TOPIC3_LIGHT,true));
 	mqtt->setKeepAlive(0);
 	mqtt->setPingRepeatTime(0);
