@@ -8,7 +8,7 @@
 /////// MQTT Stuff ///////////////
 //////////////////////////////////
 
-MqttClient *mqtt = 0;
+MqttClient *mqtt = nullptr;
 
 
 // Check for MQTT Disconnection
@@ -41,7 +41,7 @@ void onMessageReceived(String topic, String message)
 void startMqttClient()
 {
 	// if mqtt not initialized yet, do so (does DNS lookup, so network needed!!)
-	if (0 == mqtt)
+	if (nullptr == mqtt)
 		mqtt = new MqttClient(SpiffsConfig.mqtt_broker, SpiffsConfig.mqtt_port, onMessageReceived);
 
 /*	if(!mqtt->setWill("last/will","The connection from this device is lost:(", 1, true)) {
@@ -78,7 +78,7 @@ void startMqttClient()
 
 void stopMqttClient()
 {
-	if (0 == mqtt)
+	if (nullptr == mqtt)
 		return;
 	// mqtt->unsubscribe(SpiffsConfig.getMQTTTopic(JSON_TOPIC3_LIGHT,true));
 	mqtt->setKeepAlive(0);
