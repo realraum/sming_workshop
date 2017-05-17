@@ -5,7 +5,6 @@
 #include <SmingCore/Debug.h>
 #include <WS2812/WS2812.h>
 #include "application.h"
-#include "telnet.h"
 #include "mqtt.h"
 #include "button.h"
 #ifdef ENABLE_SSL
@@ -112,7 +111,6 @@ void init()
 	// spiffs_mount();
 	SpiffsConfig.load(); //loads netsettings from fs
 
-	telnetRegisterCmdsWithCommandHandler();
 	commandHandler.registerSystemCommands();
 	mybutton_ = new DebouncedButton(BUTTON_PIN, 30, true);
 	//this
