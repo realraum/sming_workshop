@@ -76,14 +76,7 @@ void mainLoop() {
 	}
 }
 
-void init()
-{
-	Serial.begin(SERIAL_BAUD_RATE);
-	Serial.systemDebugOutput(true); // Allow debug print to serial
-	Serial.commandProcessing(true);
-	debugf("init()");
-	setupPINs();
-
+void spiffs_mount_with_rboot() {
 	// Mount file system, in order to work with files
 	int slot = rboot_get_current_rom();
 #ifndef DISABLE_SPIFFS
@@ -107,7 +100,17 @@ void init()
 #else
 	debugf("spiffs disabled");
 #endif
+}
 
+void init()
+{
+	Serial.begin(SERIAL_BAUD_RATE);
+	Serial.systemDebugOutput(true); // Allow debug print to serial
+	Serial.commandProcessing(true);
+	debugf("init()");
+	setupPINs();
+
+	spiffs_mount_with_rboot();
 	// spiffs_mount();
 	SpiffsConfig.load(); //loads netsettings from fs
 
