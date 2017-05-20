@@ -15,6 +15,7 @@
 Timer mainTimer;
 
 DebouncedButton *mybutton_;
+//unique_ptr<DebouncedButton> mybutton_ = nullptr;
 
 ///////////////////////////////////////
 ///// WIFI Stuff
@@ -70,7 +71,7 @@ void mainLoop() {
 		ws2812_writergb(WS2812_PIN, ws2812_col_[ws2812_cur_settings_], ws2812_bufferlen_);
 
 		if (mqtt)
-			mqtt->publish("action/ceiling1/light", "{\"g\":"+String((uint16_t)ws2812_col_[ws2812_cur_settings_][0]*4)+",\"r\":"+String((uint16_t)ws2812_col_[ws2812_cur_settings_][1]*4)+",\"b\":"+String((uint16_t)ws2812_col_[ws2812_cur_settings_][2]*4)+"}", false);
+			mqtt->publish("action/flodder/light", "{\"g\":"+String((uint16_t)ws2812_col_[ws2812_cur_settings_][0]*1)+",\"r\":"+String((uint16_t)ws2812_col_[ws2812_cur_settings_][1]*1)+",\"b\":"+String((uint16_t)ws2812_col_[ws2812_cur_settings_][2]*1)+"}", false);
 
 		ws2812_cur_settings_ = (ws2812_cur_settings_ +1) % ws2812_num_settings_;
 	}
@@ -116,6 +117,7 @@ void init()
 
 	commandHandler.registerSystemCommands();
 	mybutton_ = new DebouncedButton(BUTTON_PIN, 30, true);
+	//mybutton_.reset(new DebouncedButton(BUTTON_PIN, 30, true));
 	//this
 
 	configureWifi();
