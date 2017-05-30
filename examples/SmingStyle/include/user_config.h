@@ -19,9 +19,9 @@ extern "C" {
 #ifndef MQTT_HOST
   #define MQTT_HOST "test.mosquitto.org"
   #ifndef ENABLE_SSL
-    #define MQTT_PORT 1883
+	#define MQTT_PORT 1883
   #else
-    #define MQTT_PORT 8883
+	#define MQTT_PORT 8883
   #endif
 #endif
 

@@ -4,7 +4,7 @@
  * about 3.2 seconds. system_soft_wdt_stop() disables the software watchdog but after
  * about 6 seconds the hardware watchdog resets the system.
  *
- * @see: SmingTemplate for the right way
+ * @see: SmingStyle for the right way
  *
  */
 
@@ -14,9 +14,8 @@
 
 #define LED_PIN 2 // LED, TXD1
 
-// forward declation
+// forward declarations
 void setup();
-
 void loop();
 
 
