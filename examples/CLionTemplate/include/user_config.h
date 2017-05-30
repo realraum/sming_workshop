@@ -4,17 +4,29 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-// If you want, you can define WiFi settings globally in Sming.setting Environment Variables
 #ifndef WIFI_SSID
-  #define WIFI_SSID "PleaseEnterSSID" // Put you SSID and Password here
+  #define WIFI_SSID "PleaseEnterSSID"
   #define WIFI_PWD "PleaseEnterPass"
 #endif
 
-// UART config
-#ifndef SERIAL_BAUD_RATE
-  #define SERIAL_BAUD_RATE 115200
+// ... and/or MQTT username and password
+#ifndef MQTT_USERNAME
+  #define MQTT_USERNAME ""
+  #define MQTT_PWD ""
 #endif
+
+// ... and/or MQTT host and port
+#ifndef MQTT_HOST
+  #define MQTT_HOST "test.mosquitto.org"
+  #ifndef ENABLE_SSL
+    #define MQTT_PORT 1883
+  #else
+    #define MQTT_PORT 8883
+  #endif
+#endif
+
+// UART config
+#define SERIAL_BAUD_RATE 115200
 
 // ESP SDK config
 #define LWIP_OPEN_SRC
