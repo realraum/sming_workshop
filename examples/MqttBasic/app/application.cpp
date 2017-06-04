@@ -4,15 +4,10 @@
  * Subscribe to to topic "workshop/topic" and publish "hey!" every  4 seconds
  *
  */
-
+#include <user_config.h>
 #include <SmingCore/SmingCore.h>
 
 #define LED_PIN 2 // LED, TXD1
-
-#define WIFI_SSID "realraum-iot"
-#define WIFI_PWD "realraum-iot"
-#define MQTT_HOST "192.168.0.5"
-#define MQTT_PORT 1883
 
 void onMessageReceived(String topic, String message);
 
