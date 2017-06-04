@@ -9,7 +9,7 @@ STRING(APPEND SMING_LIB ${SMING_HOME} "Libraries")
 STRING(APPEND SMING_SYS_INC ${SMING_HOME} "system/include")
 STRING(APPEND ESP_SDK_INC $ENV{ESP_HOME} "/sdk/include")
 
-include_directories("include/" ${SMING_HOME} ${SMING_LIB} ${SMING_SYS_INC} ${ESP_SDK_INC})
+include_directories("include" ${SMING_HOME} ${SMING_LIB} ${SMING_SYS_INC} ${ESP_SDK_INC})
 
 set(SOURCE_FILES app/application.cpp include/user_config.h)
 add_executable(dummy ${SOURCE_FILES})
