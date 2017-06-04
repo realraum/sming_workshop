@@ -9,52 +9,53 @@
 
 #define LED_PIN 2 // LED, TXD1
 
+// forward declarations
 void onMessageReceived(String topic, String message);
-
 void startMqttClient();
-
 void sendMessage();
+void startSystem();
+
 
 Timer timer;
 bool state = true;
 MqttClient *mqtt;
 
 
-void connectOk() {
-  startMqttClient();
+void init() {
+
+  WifiStation.config(WIFI_SSID, WIFI_PWD);
+  WifiAccessPoint.enable(false); // Enables/disables WiFi Access point mode
+  WifiStation.enable(true); // Enables/disables WiFi client mode
+
+  pinMode(LED_PIN, OUTPUT);
+
+  System.onReady(startSystem);
 }
 
+// start the mqtt client and register callback function for received messages.
+// also register a periodic timer for sending messages
+void startSystem(){
+  mqtt = new MqttClient(MQTT_HOST, MQTT_PORT, onMessageReceived);
+  startMqttClient();
+  timer.initializeMs(4000, sendMessage).start();
+}
 
-// subscribe to a topic (at startMqttClient) to enable the callback function
+// initialize mqtt client
+void startMqttClient() {
+  mqtt->connect("esp8266_" + system_get_chip_id(), "", "", FALSE);
+  mqtt->subscribe("workshop/toggleLed");
+}
+
+// when receive a message on topic ""workshop/toggleLed" toggle the led
 void onMessageReceived(String topic, String message) {
-  digitalWrite(LED_PIN, state);
+  digitalWrite(LED_PIN, (uint8_t) state);
   state = !state;
 }
 
-void startMqttClient() {
-  mqtt->connect("esp8266", "", "", FALSE);
-  //mqtt->subscribe("workshop/topic");
-}
-
+// send message "hey!" to the topic "workshop/topic"
 void sendMessage() {
   if (mqtt->getConnectionState() != eTCS_Connected) {
     startMqttClient(); // Auto reconnect
   }
   mqtt->publish("workshop/topic", "hey!");
 }
-
-void init() {
-
-  WifiStation.config(WIFI_SSID, WIFI_PWD);
-
-  WifiAccessPoint.enable(false); // Enables/disables WiFi Access point mode
-  WifiStation.enable(true); // Enables/disables WiFi client mode
-
-  pinMode(LED_PIN, OUTPUT);
-
-  mqtt = new MqttClient(MQTT_HOST, MQTT_PORT, onMessageReceived);
-
-
-  timer.initializeMs(4000, sendMessage).start();
-}
-
