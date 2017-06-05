@@ -41,7 +41,7 @@ void GDB_IRAM_ATTR showSystemInfo() {
   Serial.printf("spi flash id: 0x%x\r\n", spi_flash_get_id());
   Serial.printf("boot mode: %d\r\n", system_get_boot_mode());
   Serial.printf("adc: %d\r\n", system_get_vdd33());
-  Serial.printf("%s\r\n\n", WifiStation.getSSID().c_str());
+  Serial.printf("wifi ssid: %s\r\n", WifiStation.getSSID().c_str());
 }
 
 void GDB_IRAM_ATTR blink() {

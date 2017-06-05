@@ -9,40 +9,44 @@
 
 #define LED_PIN 2 // LED, TXD1
 
+
+
 // forward declarations
 void onMessageReceived(String topic, String message);
-void startMqttClient();
+void connectMqttClient();
 void sendMessage();
-void startSystem();
+void initializeMqtt(String ssid, uint8_t ssid_len, uint8_t *bssid, uint8_t channel);
 
 
 Timer timer;
 bool state = true;
 MqttClient *mqtt;
-
+String mqttClientId;
 
 void init() {
+  pinMode(LED_PIN, OUTPUT);
 
   WifiStation.config(WIFI_SSID, WIFI_PWD);
   WifiAccessPoint.enable(false); // Enables/disables WiFi Access point mode
   WifiStation.enable(true); // Enables/disables WiFi client mode
 
-  pinMode(LED_PIN, OUTPUT);
+  mqttClientId = "esp8266_" + String(system_get_chip_id());
 
-  System.onReady(startSystem);
+  WifiEvents.onStationConnect(initializeMqtt);
 }
 
-// start the mqtt client and register callback function for received messages.
+
+// initialize the mqtt client and register callback function for received messages.
 // also register a periodic timer for sending messages
-void startSystem(){
+void initializeMqtt(String ssid, uint8_t ssid_len, uint8_t *bssid, uint8_t channel){
   mqtt = new MqttClient(MQTT_HOST, MQTT_PORT, onMessageReceived);
-  startMqttClient();
+  connectMqttClient();
   timer.initializeMs(4000, sendMessage).start();
 }
 
-// initialize mqtt client
-void startMqttClient() {
-  mqtt->connect("esp8266_" + system_get_chip_id(), "", "", FALSE);
+// connect to the  mqtt broker and subscribe to the "workshop/toggleLed" topic
+void connectMqttClient() {
+  mqtt->connect(mqttClientId, "", "", FALSE);
   mqtt->subscribe("workshop/toggleLed");
 }
 
@@ -55,7 +59,7 @@ void onMessageReceived(String topic, String message) {
 // send message "hey!" to the topic "workshop/topic"
 void sendMessage() {
   if (mqtt->getConnectionState() != eTCS_Connected) {
-    startMqttClient(); // Auto reconnect
+    connectMqttClient(); // Auto reconnect
   }
   mqtt->publish("workshop/topic", "hey!");
 }
