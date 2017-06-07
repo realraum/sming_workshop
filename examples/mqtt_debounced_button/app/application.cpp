@@ -71,7 +71,7 @@ void mainLoop() {
 		ws2812_writergb(WS2812_PIN, ws2812_col_[ws2812_cur_settings_], ws2812_bufferlen_);
 
 		if (mqtt)
-			mqtt->publish("action/flodder/light", "{\"g\":"+String((uint16_t)ws2812_col_[ws2812_cur_settings_][0]*1)+",\"r\":"+String((uint16_t)ws2812_col_[ws2812_cur_settings_][1]*1)+",\"b\":"+String((uint16_t)ws2812_col_[ws2812_cur_settings_][2]*1)+"}", false);
+			mqtt->publish("action/flooddoor/light", "{\"g\":"+String((uint16_t)ws2812_col_[ws2812_cur_settings_][0]*1)+",\"r\":"+String((uint16_t)ws2812_col_[ws2812_cur_settings_][1]*1)+",\"b\":"+String((uint16_t)ws2812_col_[ws2812_cur_settings_][2]*1)+"}", false);
 
 		ws2812_cur_settings_ = (ws2812_cur_settings_ +1) % ws2812_num_settings_;
 	}
