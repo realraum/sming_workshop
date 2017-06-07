@@ -15,7 +15,7 @@
 void onMessageReceived(String topic, String message);
 void connectMqttClient();
 void sendMessage();
-void initializeMqtt(String ssid, uint8_t ssid_len, uint8_t *bssid, uint8_t channel);
+void initializeMqtt(IPAddress ip, IPAddress mask, IPAddress gateway);
 
 
 Timer timer;
@@ -32,13 +32,15 @@ void init() {
 
   mqttClientId = "esp8266_" + String(system_get_chip_id());
 
-  WifiEvents.onStationConnect(initializeMqtt);
+  WifiEvents.onStationGotIP(initializeMqtt);
 }
 
 
 // initialize the mqtt client and register callback function for received messages.
 // also register a periodic timer for sending messages
-void initializeMqtt(String ssid, uint8_t ssid_len, uint8_t *bssid, uint8_t channel){
+void initializeMqtt(IPAddress ip, IPAddress mask, IPAddress gateway){
+  if (nullptr != mqtt)
+    delete mqtt;	
   mqtt = new MqttClient(MQTT_HOST, MQTT_PORT, onMessageReceived);
   connectMqttClient();
   timer.initializeMs(4000, sendMessage).start();

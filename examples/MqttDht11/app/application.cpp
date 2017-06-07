@@ -13,7 +13,7 @@
 
 void onMessageReceived(String topic, String message);
 void connectMqttClient();
-void initializeMqtt(String ssid, uint8_t ssid_len, uint8_t *bssid, uint8_t channel);
+void initializeMqtt(IPAddress ip, IPAddress mask, IPAddress gateway);
 void showSystemInfo();
 void publishData();
 
@@ -54,12 +54,14 @@ void init() {
   WDT.enable(true);
 
 
-  WifiEvents.onStationConnect(initializeMqtt);
+  WifiEvents.onStationGotIP(initializeMqtt);
 
 }
 
 // initialize mqtt client and register a periodic timer for sending messages
-void initializeMqtt(String ssid, uint8_t ssid_len, uint8_t *bssid, uint8_t channel){
+void initializeMqtt(IPAddress ip, IPAddress mask, IPAddress gateway) {
+  if (nullptr != mqtt)
+    delete mqtt;  
   mqtt = new MqttClient(MQTT_HOST, MQTT_PORT, onMessageReceived);
   timer.initializeMs(4000, publishData).start();
 }
