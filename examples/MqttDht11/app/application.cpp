@@ -21,7 +21,7 @@ void publishData();
 Timer timer;
 bool state = true;
 float temperature, humidity;
-MqttClient *mqtt;
+MqttClient *mqtt = nullptr;
 String mqttClientId;
 DHT dht(DHT_PIN);
 
@@ -83,8 +83,11 @@ void publishData() {
   Serial.printf("\r\n\nTemperature: %f\r\n", temperature);
   Serial.printf("Humidity: %f\r\n", humidity);
 
-  if (mqtt->getConnectionState() != eTCS_Connected) {
-    connectMqttClient(); // Auto reconnect
+  if (nullptr != mqtt)
+  {
+    if (mqtt->getConnectionState() != eTCS_Connected) {
+      connectMqttClient(); // Auto reconnect
+    }
   }
 
   Serial.println("Let's publish message now!");

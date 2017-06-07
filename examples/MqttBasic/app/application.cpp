@@ -20,7 +20,7 @@ void initializeMqtt(String ssid, uint8_t ssid_len, uint8_t *bssid, uint8_t chann
 
 Timer timer;
 bool state = true;
-MqttClient *mqtt;
+MqttClient *mqtt = nullptr;
 String mqttClientId;
 
 void init() {
@@ -46,6 +46,8 @@ void initializeMqtt(String ssid, uint8_t ssid_len, uint8_t *bssid, uint8_t chann
 
 // connect to the  mqtt broker and subscribe to the "workshop/toggleLed" topic
 void connectMqttClient() {
+  if (nullptr == mqtt)
+    return;
   mqtt->connect(mqttClientId, "", "", FALSE);
   mqtt->subscribe("workshop/toggleLed");
 }
@@ -58,6 +60,8 @@ void onMessageReceived(String topic, String message) {
 
 // send message "hey!" to the topic "workshop/topic"
 void sendMessage() {
+  if (nullptr == mqtt)
+    return;
   if (mqtt->getConnectionState() != eTCS_Connected) {
     connectMqttClient(); // Auto reconnect
   }

@@ -1,5 +1,5 @@
-
 ESP8266 mit Sming
+=================
 
 mit Bernhard Tittelbach und Tom Hlina
 
@@ -16,6 +16,3 @@ mit Bernhard Tittelbach und Tom Hlina
 - Led and Buttons (workshop/finished/example1)
 
 - Experiments
-
-
-
