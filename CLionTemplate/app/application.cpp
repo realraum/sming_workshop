@@ -42,6 +42,7 @@ void showSystemInfo() {
   Serial.printf("boot mode: %d\r\n", system_get_boot_mode());
   Serial.printf("adc: %d\r\n", system_get_vdd33());
   Serial.printf("wifi ssid: %s\r\n", WifiStation.getSSID().c_str());
+}
 
 void blink() {
   digitalWrite(LED_PIN, (uint8_t) state);
