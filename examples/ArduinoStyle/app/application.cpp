@@ -1,6 +1,6 @@
 /**
  * Arduino style does not work with sming. The example runs into a watchdog reset.
- * WDT.alive() can be uses in the loop to prevent the watchdog reset. But only for
+ * WDT.alive() can be used in the loop to prevent the watchdog reset. But only for
  * about 3.2 seconds. system_soft_wdt_stop() disables the software watchdog but after
  * about 6 seconds the hardware watchdog resets the system.
  *
